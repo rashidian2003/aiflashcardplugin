@@ -1,0 +1,831 @@
+/* ===== AI Flashcard Studio ===== */
+
+/* --- Studio modal --- */
+.afs-studio-modal {
+	width: min(720px, 95vw);
+}
+
+.afs-tabs {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+	margin-bottom: 12px;
+}
+
+.afs-tab {
+	padding: 6px 12px;
+	border-radius: var(--radius-s);
+	background: var(--background-secondary);
+	border: 1px solid var(--background-modifier-border);
+	cursor: pointer;
+	/* Touch-friendly on phones */
+	min-height: 36px;
+}
+
+.afs-tab.is-active {
+	background: var(--interactive-accent);
+	color: var(--text-on-accent);
+	border-color: var(--interactive-accent);
+}
+
+.afs-source-area {
+	margin-bottom: 8px;
+}
+
+.afs-textarea {
+	width: 100%;
+	min-height: 140px;
+	resize: vertical;
+	font-family: var(--font-text);
+}
+
+.afs-file-row {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	align-items: center;
+}
+
+.afs-file-label {
+	color: var(--text-muted);
+	font-size: var(--font-ui-small);
+	overflow-wrap: anywhere;
+}
+
+.afs-hint {
+	color: var(--text-muted);
+	font-size: var(--font-ui-small);
+	margin-top: 6px;
+}
+
+.afs-controls {
+	border-top: 1px solid var(--background-modifier-border);
+	margin-top: 8px;
+	padding-top: 4px;
+}
+
+.afs-actions {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	margin: 12px 0;
+	flex-wrap: wrap;
+}
+
+.afs-actions button {
+	min-height: 40px;
+}
+
+.afs-progress {
+	color: var(--text-muted);
+	font-size: var(--font-ui-small);
+}
+
+.afs-progress.afs-error {
+	color: var(--text-error);
+}
+
+.afs-hidden {
+	display: none !important;
+}
+
+/* --- Card preview list --- */
+.afs-preview {
+	max-height: 45vh;
+	overflow-y: auto;
+}
+
+.afs-card-row {
+	display: flex;
+	gap: 8px;
+	padding: 10px 4px;
+	border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.afs-card-row input[type="checkbox"] {
+	margin-top: 6px;
+	width: 18px;
+	height: 18px;
+	flex-shrink: 0;
+}
+
+.afs-card-fields {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.afs-card-fields textarea {
+	width: 100%;
+	min-height: 44px;
+	resize: vertical;
+	font-family: var(--font-text);
+	font-size: var(--font-ui-small);
+}
+
+.afs-card-front {
+	font-weight: 600;
+}
+
+.afs-card-tags {
+	font-size: var(--font-ui-smaller);
+	color: var(--text-muted);
+}
+
+/* --- Review modal --- */
+.afs-review-modal {
+	width: min(640px, 95vw);
+}
+
+.afs-review-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	flex-wrap: wrap;
+}
+
+.afs-review-card-area {
+	margin: 8px 0;
+}
+
+.afs-review-meta {
+	color: var(--text-muted);
+	font-size: var(--font-ui-smaller);
+	margin-bottom: 10px;
+}
+
+/* 3D click-to-flip card: two faces stacked in the same grid cell so the
+   container auto-sizes to the taller face; rotateY turns it over. */
+.afs-flip-scene {
+	perspective: 1200px;
+}
+
+.afs-flip {
+	display: grid;
+	transform-style: preserve-3d;
+	transition: transform 0.5s ease;
+	cursor: pointer;
+	min-height: 180px;
+}
+
+.afs-flip.is-flipped {
+	transform: rotateY(180deg);
+}
+
+.afs-flip-face {
+	grid-area: 1 / 1;
+	backface-visibility: hidden;
+	-webkit-backface-visibility: hidden;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	padding: 20px;
+	border-radius: var(--radius-m);
+	background: var(--background-secondary);
+	border: 1px solid var(--background-modifier-border);
+}
+
+.afs-flip-back {
+	transform: rotateY(180deg);
+}
+
+.afs-review-front {
+	font-size: 1.15em;
+	font-weight: 600;
+	text-align: center;
+}
+
+.afs-flip-hint {
+	margin-top: 16px;
+	text-align: center;
+	color: var(--text-faint);
+	font-size: var(--font-ui-smaller);
+}
+
+.afs-review-back-question {
+	color: var(--text-muted);
+	font-size: var(--font-ui-small);
+	text-align: center;
+}
+
+.afs-review-buttons {
+	display: flex;
+	gap: 8px;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+
+/* Big tap targets — these get tapped on phones */
+.afs-rate-btn {
+	min-height: 54px;
+	min-width: 72px;
+	flex: 1;
+	max-width: 140px;
+	font-weight: 600;
+	border-radius: var(--radius-m);
+	cursor: pointer;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 2px;
+}
+
+.afs-rate-interval {
+	font-size: var(--font-ui-smaller);
+	font-weight: 400;
+	opacity: 0.75;
+}
+
+.afs-again {
+	background: rgba(var(--color-red-rgb), 0.15);
+	color: var(--color-red);
+}
+
+.afs-hard {
+	background: rgba(var(--color-orange-rgb), 0.15);
+	color: var(--color-orange);
+}
+
+.afs-good {
+	background: rgba(var(--color-green-rgb), 0.15);
+	color: var(--color-green);
+}
+
+.afs-easy {
+	background: rgba(var(--color-blue-rgb), 0.15);
+	color: var(--color-blue);
+}
+
+.afs-review-done {
+	font-size: 1.2em;
+	text-align: center;
+	padding: 24px 0 12px;
+}
+
+.afs-review-stats {
+	text-align: center;
+	color: var(--text-muted);
+	padding-bottom: 12px;
+}
+
+/* --- Manual card decorations (editor + reading mode) --- */
+.afs-inline-card-line {
+	background: rgba(var(--color-purple-rgb), 0.06);
+	border-radius: var(--radius-s);
+}
+
+.afs-inline-sep {
+	color: var(--color-purple);
+	font-weight: 700;
+	opacity: 0.8;
+}
+
+.afs-cloze {
+	background: rgba(var(--color-cyan-rgb), 0.12);
+	border-bottom: 1.5px dashed var(--color-cyan);
+	border-radius: 2px;
+	padding: 0 1px;
+}
+
+/* --- Explain drawer --- */
+.afs-drawer {
+	position: fixed;
+	top: 0;
+	right: 0;
+	height: 100%;
+	width: min(400px, 90vw);
+	z-index: var(--layer-modal);
+	display: flex;
+	flex-direction: column;
+	background: var(--background-primary);
+	border-left: 1px solid var(--background-modifier-border);
+	box-shadow: -4px 0 16px rgba(0, 0, 0, 0.25);
+	transform: translateX(105%);
+	transition: transform 0.25s ease;
+}
+
+.afs-drawer.is-open {
+	transform: translateX(0);
+}
+
+/* Bottom sheet on phones */
+body.is-mobile .afs-drawer {
+	top: auto;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	width: 100%;
+	height: min(60vh, 480px);
+	border-left: none;
+	border-top: 1px solid var(--background-modifier-border);
+	border-radius: var(--radius-l) var(--radius-l) 0 0;
+	box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.25);
+	transform: translateY(105%);
+}
+
+body.is-mobile .afs-drawer.is-open {
+	transform: translateY(0);
+}
+
+.afs-drawer-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 10px 14px;
+	border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.afs-drawer-title {
+	font-weight: 700;
+}
+
+.afs-drawer-close {
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	padding: 6px;
+	min-width: 36px;
+	min-height: 36px;
+	color: var(--text-muted);
+}
+
+.afs-drawer-selection {
+	padding: 8px 14px 0;
+	color: var(--text-muted);
+	font-size: var(--font-ui-smaller);
+	font-style: italic;
+}
+
+.afs-drawer-body {
+	flex: 1;
+	overflow-y: auto;
+	padding: 10px 14px;
+}
+
+.afs-drawer-footer {
+	display: flex;
+	gap: 8px;
+	padding: 10px 14px;
+	border-top: 1px solid var(--background-modifier-border);
+}
+
+.afs-drawer-footer:empty {
+	display: none;
+}
+
+.afs-drawer-footer button {
+	flex: 1;
+	min-height: 40px;
+}
+
+.afs-drawer-loading {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	color: var(--text-muted);
+	padding: 12px 0;
+}
+
+.afs-drawer-spinner {
+	width: 16px;
+	height: 16px;
+	border: 2px solid var(--background-modifier-border);
+	border-top-color: var(--interactive-accent);
+	border-radius: 50%;
+	animation: afs-spin 0.8s linear infinite;
+}
+
+@keyframes afs-spin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+.afs-drawer-error {
+	color: var(--text-error);
+}
+
+/* --- Dashboard --- */
+.afs-dashboard {
+	padding: 12px 20px 32px;
+	overflow-y: auto;
+}
+
+.afs-dash-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+}
+
+.afs-dash-section {
+	margin-bottom: 24px;
+}
+
+.afs-dash-section h3 {
+	border-bottom: 1px solid var(--background-modifier-border);
+	padding-bottom: 4px;
+}
+
+.afs-dash-empty {
+	color: var(--text-muted);
+}
+
+.afs-dash-total {
+	font-weight: 600;
+	margin-bottom: 8px;
+}
+
+.afs-dash-deck-list {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.afs-dash-deck-row {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	padding: 6px 10px;
+	border-radius: var(--radius-s);
+	background: var(--background-secondary);
+}
+
+.afs-dash-deck-name {
+	flex: 1;
+	font-weight: 500;
+	overflow-wrap: anywhere;
+}
+
+.afs-dash-deck-count {
+	color: var(--text-muted);
+	font-variant-numeric: tabular-nums;
+}
+
+.afs-dash-deck-row button {
+	min-height: 36px;
+}
+
+.afs-dash-all-btn {
+	margin-top: 8px;
+	min-height: 40px;
+}
+
+/* Anki-style collapsible deck tree */
+.afs-deck-tree {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	margin-bottom: 8px;
+}
+
+.afs-deck-row {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 5px 8px;
+	border-radius: var(--radius-s);
+	min-height: 38px;
+}
+
+.afs-deck-row:hover {
+	background: var(--background-secondary);
+}
+
+.afs-deck-chevron {
+	width: 20px;
+	height: 20px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	color: var(--text-muted);
+	flex-shrink: 0;
+}
+
+.afs-deck-chevron-empty {
+	cursor: default;
+}
+
+.afs-deck-counts {
+	display: flex;
+	gap: 6px;
+	font-variant-numeric: tabular-nums;
+	font-size: var(--font-ui-small);
+}
+
+.afs-deck-count {
+	min-width: 22px;
+	text-align: center;
+	border-radius: var(--radius-s);
+	padding: 1px 5px;
+}
+
+.afs-count-due {
+	background: rgba(var(--color-red-rgb), 0.12);
+	color: var(--color-red);
+	font-weight: 600;
+}
+
+.afs-count-new {
+	background: rgba(var(--color-blue-rgb), 0.12);
+	color: var(--color-blue);
+}
+
+.afs-count-learning {
+	background: rgba(var(--color-orange-rgb), 0.12);
+	color: var(--color-orange);
+}
+
+.afs-count-mature {
+	background: rgba(var(--color-green-rgb), 0.12);
+	color: var(--color-green);
+}
+
+.afs-deck-review-btn {
+	min-height: 32px;
+	padding: 2px 12px;
+}
+
+.afs-deck-more {
+	width: 24px;
+	height: 24px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	color: var(--text-faint);
+	flex-shrink: 0;
+}
+
+.afs-deck-more:hover {
+	color: var(--text-normal);
+}
+
+/* Deck manager */
+.afs-deckmgr-actions {
+	display: flex;
+	gap: 8px;
+}
+
+.afs-deckmgr-counts {
+	color: var(--text-muted);
+	font-size: var(--font-ui-small);
+}
+
+.afs-deckmgr-btns {
+	display: flex;
+	gap: 2px;
+	margin-inline-start: auto;
+}
+
+/* Deck manager toolbar + drag-drop */
+.afs-deckmgr-toolbar {
+	display: flex;
+	gap: 8px;
+	align-items: center;
+	flex-wrap: wrap;
+	margin: 4px 0 12px;
+}
+
+.afs-deckmgr-search {
+	flex: 1;
+	min-width: 160px;
+	max-width: 320px;
+}
+
+.afs-deck-row.afs-drop-target {
+	outline: 2px dashed var(--interactive-accent);
+	outline-offset: -2px;
+	background: rgba(var(--color-blue-rgb), 0.08);
+}
+
+.afs-browse-due {
+	flex-shrink: 0;
+	font-size: var(--font-ui-smaller);
+	color: var(--text-muted);
+	font-variant-numeric: tabular-nums;
+}
+
+.afs-browse-due.is-due {
+	color: var(--color-red);
+	font-weight: 600;
+}
+
+/* Card browser (browse mode) */
+.afs-deck-name-link {
+	cursor: pointer;
+}
+
+.afs-deck-name-link:hover {
+	color: var(--interactive-accent);
+	text-decoration: underline;
+}
+
+.afs-browse-bar {
+	align-items: center;
+	margin-bottom: 10px;
+}
+
+.afs-browse-list {
+	display: flex;
+	flex-direction: column;
+}
+
+.afs-browse-row {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 7px 8px;
+	border-bottom: 1px solid var(--background-modifier-border);
+	min-height: 40px;
+}
+
+.afs-browse-row:hover {
+	background: var(--background-secondary);
+}
+
+.afs-browse-type {
+	flex-shrink: 0;
+	font-size: var(--font-ui-smaller);
+	padding: 1px 7px;
+	border-radius: var(--radius-s);
+	background: var(--background-modifier-border);
+	color: var(--text-muted);
+	min-width: 48px;
+	text-align: center;
+}
+
+.afs-type-cloze {
+	background: rgba(var(--color-cyan-rgb), 0.15);
+	color: var(--color-cyan);
+}
+
+.afs-type-inline {
+	background: rgba(var(--color-purple-rgb), 0.15);
+	color: var(--color-purple);
+}
+
+.afs-browse-front {
+	flex: 1;
+	cursor: pointer;
+	overflow-wrap: anywhere;
+}
+
+/* Card editor modal */
+.afs-card-editor {
+	width: min(640px, 95vw);
+}
+
+.afs-editor-label {
+	font-weight: 600;
+	font-size: var(--font-ui-small);
+	margin: 10px 0 4px;
+	color: var(--text-muted);
+}
+
+.afs-editor-field {
+	min-height: 70px;
+}
+
+.afs-editor-tags {
+	width: 100%;
+}
+
+.afs-editor-preview {
+	border: 1px solid var(--background-modifier-border);
+	border-radius: var(--radius-s);
+	padding: 10px;
+	max-height: 30vh;
+	overflow-y: auto;
+	background: var(--background-secondary);
+}
+
+/* Insert-image row in the card editor */
+.afs-img-row {
+	display: flex;
+	gap: 6px;
+	margin: 4px 0 8px;
+}
+
+.afs-img-btn {
+	font-size: var(--font-ui-small);
+	min-height: 32px;
+	padding: 2px 10px;
+}
+
+/* Images embedded in cards */
+.afs-card-img {
+	max-width: 100%;
+	max-height: 320px;
+	border-radius: var(--radius-s);
+	display: block;
+	margin: 8px auto;
+}
+
+/* Forecast bar chart — plain divs, no chart library */
+.afs-dash-chart {
+	display: flex;
+	align-items: flex-end;
+	gap: 8px;
+	height: 130px;
+}
+
+.afs-dash-bar-col {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 4px;
+	max-width: 72px;
+}
+
+.afs-dash-bar {
+	width: 70%;
+	background: var(--interactive-accent);
+	border-radius: 3px 3px 0 0;
+	opacity: 0.85;
+}
+
+.afs-dash-bar-value,
+.afs-dash-bar-label {
+	font-size: var(--font-ui-smaller);
+	color: var(--text-muted);
+	font-variant-numeric: tabular-nums;
+}
+
+.afs-dash-table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.afs-dash-table th,
+.afs-dash-table td {
+	text-align: left;
+	padding: 6px 10px;
+	border-bottom: 1px solid var(--background-modifier-border);
+	font-variant-numeric: tabular-nums;
+}
+
+.afs-dash-table th {
+	color: var(--text-muted);
+	font-size: var(--font-ui-small);
+}
+
+/* GitHub-style activity heatmap */
+.afs-dash-heatmap {
+	display: flex;
+	gap: 3px;
+	overflow-x: auto;
+	padding-bottom: 4px;
+}
+
+.afs-dash-heat-col {
+	display: flex;
+	flex-direction: column;
+	gap: 3px;
+}
+
+.afs-dash-heat-cell {
+	width: 12px;
+	height: 12px;
+	border-radius: 2px;
+}
+
+.afs-heat-0 {
+	background: var(--background-modifier-border);
+}
+.afs-heat-1 {
+	background: rgba(var(--color-green-rgb), 0.3);
+}
+.afs-heat-2 {
+	background: rgba(var(--color-green-rgb), 0.5);
+}
+.afs-heat-3 {
+	background: rgba(var(--color-green-rgb), 0.75);
+}
+.afs-heat-4 {
+	background: var(--color-green);
+}
+
+/* --- Ribbon badge --- */
+.afs-ribbon-review {
+	position: relative;
+}
+
+.afs-badge {
+	position: absolute;
+	top: -2px;
+	right: -4px;
+	background: var(--color-red);
+	color: white;
+	border-radius: 8px;
+	font-size: 9px;
+	line-height: 1;
+	padding: 2px 4px;
+	pointer-events: none;
+}
