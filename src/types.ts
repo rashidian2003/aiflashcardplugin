@@ -69,6 +69,8 @@ export interface AIFlashcardSettings {
 	chunkTokenThreshold: number;
 	deckFolder: string;
 	autoOpenReview: boolean;
+	/** Suggest turning `Front -> Back` into a flashcard while typing. */
+	arrowSuggest: boolean;
 }
 
 export interface PluginData {
@@ -86,6 +88,7 @@ export const DEFAULT_SETTINGS: AIFlashcardSettings = {
 	chunkTokenThreshold: 6000,
 	deckFolder: "Flashcards",
 	autoOpenReview: false,
+	arrowSuggest: true,
 };
 
 export const KNOWN_MODELS = [

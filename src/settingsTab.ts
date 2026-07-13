@@ -139,6 +139,18 @@ export class AIFlashcardSettingTab extends PluginSettingTab {
 			);
 
 		new Setting(containerEl)
+			.setName("Suggest flashcard on “→” while typing")
+			.setDesc(
+				"When you type `Front -> Back` in a note (with spaces around the arrow), a popup offers to turn it into a flashcard."
+			)
+			.addToggle((tg) =>
+				tg.setValue(s.arrowSuggest).onChange(async (v) => {
+					s.arrowSuggest = v;
+					await this.plugin.savePluginData();
+				})
+			);
+
+		new Setting(containerEl)
 			.setName("Open review queue on startup")
 			.setDesc("Automatically open the review session when Obsidian starts and cards are due.")
 			.addToggle((tg) =>

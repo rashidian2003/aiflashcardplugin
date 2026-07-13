@@ -1,7 +1,7 @@
 {
   "id": "ai-flashcard-studio",
   "name": "AI Flashcard Studio",
-  "version": "0.11.0",
+  "version": "0.12.0",
   "minAppVersion": "1.5.0",
   "description": "Generate spaced-repetition flashcards from text, PDFs, images and notes using the Google Gemini API. Includes a built-in SM-2 review engine.",
   "author": "Mohammadreza Rashidian",

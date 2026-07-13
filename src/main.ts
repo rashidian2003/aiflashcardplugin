@@ -1,4 +1,5 @@
 import { Notice, Plugin, WorkspaceLeaf } from "obsidian";
+import { ArrowCardSuggest } from "./arrowSuggest";
 import { NewCardModal } from "./cardBrowser";
 import { CardStore, collectDeckPaths } from "./cardStore";
 import { DASHBOARD_VIEW_TYPE, DashboardView } from "./dashboardView";
@@ -103,6 +104,7 @@ export default class AIFlashcardPlugin extends Plugin {
 
 		this.addSettingTab(new AIFlashcardSettingTab(this.app, this));
 		registerEditorActions(this);
+		this.registerEditorSuggest(new ArrowCardSuggest(this));
 		this.registerEditorExtension(cardDecorationExtension);
 		this.registerMarkdownPostProcessor(cardPostProcessor);
 

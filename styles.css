@@ -704,6 +704,17 @@ body.is-mobile .afs-drawer.is-open {
 	background: var(--background-secondary);
 }
 
+/* Arrow (->) flashcard suggestion popup */
+.afs-arrow-title {
+	font-weight: 600;
+}
+
+.afs-arrow-preview {
+	font-size: var(--font-ui-smaller);
+	color: var(--text-muted);
+	overflow-wrap: anywhere;
+}
+
 /* Insert-image row in the card editor */
 .afs-img-row {
 	display: flex;
