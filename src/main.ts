@@ -1,4 +1,5 @@
 import { Notice, Plugin, WorkspaceLeaf } from "obsidian";
+import { NewCardModal } from "./cardBrowser";
 import { CardStore, collectDeckPaths } from "./cardStore";
 import { DASHBOARD_VIEW_TYPE, DashboardView } from "./dashboardView";
 import { DECK_MANAGER_VIEW_TYPE, DeckManagerView } from "./deckManagerView";
@@ -55,6 +56,7 @@ export default class AIFlashcardPlugin extends Plugin {
 		this.addRibbonIcon("folder-tree", "Deck manager", () =>
 			void this.openView(DECK_MANAGER_VIEW_TYPE)
 		);
+		this.addRibbonIcon("file-plus", "Add flashcard (manual)", () => this.addCardManual());
 
 		this.addCommand({
 			id: "open-studio",
@@ -80,6 +82,11 @@ export default class AIFlashcardPlugin extends Plugin {
 			id: "open-deck-manager",
 			name: "Open deck manager",
 			callback: () => void this.openView(DECK_MANAGER_VIEW_TYPE),
+		});
+		this.addCommand({
+			id: "add-card-manual",
+			name: "Add flashcard (manual, no AI)",
+			callback: () => this.addCardManual(),
 		});
 
 		this.addCommand({
@@ -144,6 +151,24 @@ export default class AIFlashcardPlugin extends Plugin {
 					new Notice(`Note assigned to deck "${deck}".`);
 				});
 		}).open();
+	}
+
+	/** Open the manual add-card form, no AI, defaulting to the active note's deck. */
+	addCardManual(): void {
+		const file = this.app.workspace.getActiveFile();
+		const initialDeck = file ? this.cardStore.deckForFile(file) : this.data.settings.deckFolder;
+		new NewCardModal(this.app, this, initialDeck, () => {
+			this.cardStore.invalidateCache();
+			void this.refreshDeckManager();
+		}).open();
+	}
+
+	/** Re-render an open Deck Manager after cards change. */
+	async refreshDeckManager(): Promise<void> {
+		for (const leaf of this.app.workspace.getLeavesOfType(DECK_MANAGER_VIEW_TYPE)) {
+			const view = leaf.view;
+			if (view instanceof DeckManagerView) await view.render();
+		}
 	}
 
 	async openDashboard(): Promise<void> {

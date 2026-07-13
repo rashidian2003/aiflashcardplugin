@@ -1,6 +1,6 @@
 import { ItemView, Notice, WorkspaceLeaf, setIcon, setTooltip } from "obsidian";
 import type AIFlashcardPlugin from "./main";
-import { CardEditorModal, ConfirmModal } from "./cardBrowser";
+import { CardEditorModal, ConfirmModal, NewCardModal } from "./cardBrowser";
 import { deleteCard, moveCardToDeck } from "./cardEdit";
 import { collectDeckPaths, deckMatches } from "./cardStore";
 import { DeckNode, DeckPathPromptModal, DeleteDeckModal, buildDeckTree } from "./deckOps";
@@ -221,6 +221,9 @@ export class DeckManagerView extends ItemView {
 			btn.addEventListener("click", onClick);
 		};
 		action("plus", "New subdeck", () => this.promptNewDeck(node.path));
+		action("file-plus", "Add card (manual)", () =>
+			new NewCardModal(this.app, this.plugin, node.path, () => void this.refresh()).open()
+		);
 		action("wand-sparkles", "Add cards (AI Studio)", () => this.plugin.openStudio(node.path));
 		action("pencil", "Rename / move", () => {
 			new DeckPathPromptModal(this.app, "Rename or move deck", node.path, allDecks, (newPath) => {
@@ -274,7 +277,11 @@ export class DeckManagerView extends ItemView {
 				new ReviewModal(this.app, this.plugin, deckPath).open()
 			);
 		}
-		const addBtn = bar.createEl("button", { text: "Add cards" });
+		const addManualBtn = bar.createEl("button", { text: "+ Add card" });
+		addManualBtn.addEventListener("click", () =>
+			new NewCardModal(this.app, this.plugin, deckPath, () => void this.refreshBrowse()).open()
+		);
+		const addBtn = bar.createEl("button", { text: "Add with AI" });
 		addBtn.addEventListener("click", () => this.plugin.openStudio(deckPath));
 		bar.createSpan({
 			cls: "afs-deckmgr-counts",
